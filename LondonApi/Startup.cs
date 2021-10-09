@@ -16,6 +16,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using LondonApi.Services;
+using LondonApi.InfraStructure;
 
 namespace LondonApi
 {
@@ -34,6 +35,8 @@ namespace LondonApi
 
             services.Configure<HotelInfo>(Configuration.GetSection("Info"));
             services.AddScoped<IRoomService, DefaultRoomService>();
+            services.AddAutoMapper(
+                options => options.AddProfile<MappingProfile>());
             services.AddControllers(options=> {
                 options.Filters.Add<JsonExceptionFilter>();
             });

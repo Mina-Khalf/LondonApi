@@ -1,4 +1,5 @@
-﻿using LondonApi.Models;
+﻿using AutoMapper;
+using LondonApi.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,11 @@ namespace LondonApi.Services
     public class DefaultRoomService : IRoomService
     {
         private readonly HotelApiDbContext _context;
-        public DefaultRoomService(HotelApiDbContext context)
+        private readonly IMapper _mapper;
+        public DefaultRoomService(HotelApiDbContext context ,IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         public async Task<Room> GetRoomByIdAsync(Guid roomId)
         {
@@ -20,12 +23,7 @@ namespace LondonApi.Services
 
             if (room == null)
                 return null;
-            return new Room()
-            {
-                Href =null,// Url.Link(nameof(GetRoomById), new { roomId = room.Id }),
-                Name = room.Name,
-                Rate = room.Rate / 100.0m
-            };
+            return _mapper.Map<Room>(room);
         }
     }
 }
