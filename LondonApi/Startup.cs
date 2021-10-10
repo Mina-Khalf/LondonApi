@@ -39,6 +39,7 @@ namespace LondonApi
                 options => options.AddProfile<MappingProfile>());
             services.AddControllers(options=> {
                 options.Filters.Add<JsonExceptionFilter>();
+                options.Filters.Add<LinkRewritingFilter>();
             });
             services.AddSwaggerGen(c =>
             {

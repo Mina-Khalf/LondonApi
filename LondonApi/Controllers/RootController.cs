@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using LondonApi.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,17 +15,11 @@ namespace LondonApi.Controllers
         [HttpGet(Name =nameof(GetRoots))]
         public  IActionResult GetRoots()
         {
-            var reponse = new
+            var reponse = new RootResponse()
             {
-                href = Url.Link(nameof(GetRoots), null),
-                Rooms = new
-                {
-                    href=Url.Link(nameof(RoomsController.GetRooms),null)
-                },
-                info = new
-                {
-                    href= Url.Link(nameof(InfoController.GetInfo), null)
-                }
+                Self = Link.To(nameof(GetRoots)),
+                Rooms = Link.To(nameof(RoomsController.GetRooms)),
+                Info = Link.To(nameof(InfoController.GetInfo))
             };
             return Ok(reponse);
         }
